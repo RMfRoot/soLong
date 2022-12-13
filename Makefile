@@ -18,7 +18,7 @@ OBJ = $(SRC:.c=.o)
 NAME = soLong
 
 %.o : %.c
-	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 all: $(NAME)
 

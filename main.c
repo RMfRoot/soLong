@@ -28,20 +28,33 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-
+char *file_path(char *action, char *direction, int iteration)
+{
+    char *path;
+    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action);
+    path = my_strjoin(path, "_");
+    path = my_strjoin(path, direction);
+    path = my_strjoin(path, ft_atoi(iteration));
+    path = my_strjoin(path, ".xpm");
+}
 int main(void)
 {
     void *mlx;
     void *mlx_win;
     t_data  img;
+    int x = 500;
+    int y = 500;
 
     mlx = mlx_init();
     if (!mlx)
         return (1);
     mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img.img = mlx_new_image(mlx, 1920, 1080);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+    img.img = mlx_xpm_file_to_image(mlx, "/mnt/c/Users/cuck/Downloads/standup_front(1).xpm", &x, &y);
+    if (!img.img)
+    {
+        perror("Image Path not found");
+        return (1);
+    }
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 500);
 	mlx_loop(mlx);
 }
