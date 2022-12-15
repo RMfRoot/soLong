@@ -43,3 +43,14 @@ char	*my_strjoin(char *s1, char *s2, int free_s1, int free_s2)
 		free(s2);
 	return (str);
 }
+
+char *file_path(char *action, char *direction, int iteration)
+{
+    char *path;
+    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action, 0, 0);
+    path = my_strjoin(path, "_", 1, 0);
+    path = my_strjoin(path, direction, 1, 0);
+    path = my_strjoin(path, ft_itoa(iteration), 1, 1);
+    path = my_strjoin(path, ".xpm", 1, 0);
+    return (path);
+}

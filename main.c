@@ -15,11 +15,17 @@
 #include "soLong.h"
 
 typedef struct s_data {
+    t_player player_imgs;
+    void *mlx;
+    void *mlx_win;
     void *img;
     char *addr;
     int bits_per_pixel;
     int line_length;
     int endian;
+    char *pathstr;
+    int width;
+    int height;
 }   t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -29,37 +35,25 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-char *file_path(char *action, char *direction, int iteration)
+int render_next_frame(t_data *img)
 {
-    char *path;
-    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action, 0, 0);
-    path = my_strjoin(path, "_", 1, 0);
-    path = my_strjoin(path, direction, 1, 0);
-    path = my_strjoin(path, ft_itoa(iteration), 1, 1);
-    path = my_strjoin(path, ".xpm", 1, 0);
-    return (path);
+    static int frame = 0;
+    if (!img->player_imgs.walk_S.images[frame])
+        frame = 0;
+    mlx_put_image_to_window(img->mlx, img->mlx_win, img->player_imgs.walk_S.images[frame], 500, 500 - img->player_imgs.walk_S.height[frame]);
+    frame++;
+    return (1);
 }
 int main(void)
 {
-    void *mlx;
-    void *mlx_win;
-    char *img_path;
     t_data  img;
-    int x = 500;
-    int y = 500;
 
-    mlx = mlx_init();
-    if (!mlx)
+    img.mlx = mlx_init();
+    if (!img.mlx)
         return (1);
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img_path = file_path("standup", "front", 0);
-    img.img = mlx_xpm_file_to_image(mlx, img_path, &x, &y);
-    if (!img.img)
-    {
-        perror("Image Path not found");
-        return (1);
-    }
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 500);
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 1000, 1000);
-	mlx_loop(mlx);
+    get_player_img(&img.player_imgs, img.mlx);
+    img.mlx_win = mlx_new_window(img.mlx, 1920, 1080, "Hello world!");
+    render_next_frame(&img);
+    mlx_loop_hook(img.mlx, render_next_frame, &img);
+	mlx_loop(img.mlx);
 }

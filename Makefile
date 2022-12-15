@@ -6,19 +6,19 @@
 #    By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 20:35:44 by egeorgel          #+#    #+#              #
-#    Updated: 2022/12/11 20:35:47 by egeorgel         ###   ########.fr        #
+#    Updated: 2022/12/15 21:03:17 by egeorgel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SRC = main.c utils.c
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+SRC = utils.c get_images.c main.c
 OBJ = $(SRC:.c=.o)
 NAME = soLong
 
 %.o : %.c
-	$(CC) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 all: $(NAME)
 
