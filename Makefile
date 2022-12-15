@@ -13,7 +13,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = main.c
+SRC = main.c utils.c
 OBJ = $(SRC:.c=.o)
 NAME = soLong
 
@@ -23,7 +23,7 @@ NAME = soLong
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB) Makefile
-	$(CC) $(CFLAGS) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
