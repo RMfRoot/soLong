@@ -12,14 +12,28 @@
 
 
 #include <stdlib.h>
-#include "soLong.h"
+#include "solong.h"
 
-char	*my_strjoin(char *s1, char *s2, int free_s1, int free_s2)
+char	*my_strjoin(char *s1, char *s2, bool free_s1, bool free_s2)
 {
 	char	*str;
 	size_t	i;
 	size_t	j;
 
+	if (!s1 && s2)
+	{
+		str = ft_strdup(s2);
+		if (free_s2)
+			free(s2);
+		return (str);
+	}
+	else if (!s2 && s1)
+	{
+		str = ft_strdup(s1);
+		if (free_s1)
+			free(s1);
+		return (str);
+	}
 	str = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);
@@ -43,14 +57,31 @@ char	*my_strjoin(char *s1, char *s2, int free_s1, int free_s2)
 		free(s2);
 	return (str);
 }
-
+int	upper_multiple_of_48(int nbr)
+{
+	nbr = nbr / 48;
+	return (++nbr * 48);
+}
 char *file_path(char *action, char *direction, int iteration)
 {
     char *path;
-    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action, 0, 0);
-    path = my_strjoin(path, "_", 1, 0);
-    path = my_strjoin(path, direction, 1, 0);
-    path = my_strjoin(path, ft_itoa(iteration), 1, 1);
-    path = my_strjoin(path, ".xpm", 1, 0);
+    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action, false, false);
+    path = my_strjoin(path, "_", true, false);
+    path = my_strjoin(path, direction, true, false);
+    path = my_strjoin(path, ft_itoa(iteration), true, true);
+    path = my_strjoin(path, ".xpm", true, false);
     return (path);
+}
+int	check_file_type(const char *haystack, const char *needle)
+{
+	size_t	i;
+	size_t	j;
+
+	i = ft_strlen(haystack) - ft_strlen(needle);
+	j = 0;
+	while (haystack[i + j] && needle[j] && haystack[i + j] == needle[j])
+		j++;
+	if (!needle[j])
+		return (1);
+	return (0);
 }
