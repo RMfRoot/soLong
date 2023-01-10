@@ -26,8 +26,8 @@ void start_position(t_data *game)
 		{
 			if (game->map.map[y][x] == 'P')
 			{
-				game->player_x = x * 48;
-				game->player_y = y * 48;
+				game->x.player = x * 48;
+				game->y.player = y * 48;
 				return ;
 			}
 		}
@@ -41,24 +41,25 @@ void get_movement(t_data *game)
 	int y;
 	int x;
 
-	y = (game->player_y + game->move_y) / 48;
-	x = (game->player_x + game->move_x) / 48;
+	y = (game->y.player + game->y.move) / 48;
+	x = (game->x.player + game->x.move) / 48;
 	if (++character_speed < 5)
 		return ;
 	character_speed = 0;
-	if (game->inputs.W_pressed && game->map.map[(game->player_y + game->move_y - 1) / 48][x] != '1')
-		game->move_y--;
-	if (game->inputs.A_pressed && game->map.map[y][(game->player_x + game->move_x - 1) / 48] != '1')
-		game->move_x--;
+	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 1) / 48][x] != '1')
+		game->y.move--;
+	if (game->inputs.A_pressed && game->map.map[y][(game->x.player + game->x.move - 1) / 48] != '1')
+		game->x.move--;
 	if (game->inputs.S_pressed && game->map.map[y+1][x] != '1')
-		game->move_y++;
+		game->y.move++;
 	if (game->inputs.D_pressed && game->map.map[y][x+1] != '1')
-		game->move_x++;
+		game->x.move++;
 }
+//fix x++ on map.ber, if 1 pixel higher, will walk on barrier.
 void get_border(t_data *game, t_frames *border)
 {	
 	malloc_img(border, 2);
-	*border->images = mlx_new_image(game->mlx, game->map.size_x * 48, game->map.size_y * 48);
+	*border->images = mlx_new_image(game->mlx, game->x.map_size * 48, game->y.map_size * 48);
 	*border->addr = mlx_get_data_addr(*border->images, border->bits_per_pixel, border->line_size, border->endian);
 }
 void screen_border(t_data *game, t_frames *border)
@@ -74,20 +75,20 @@ void screen_border(t_data *game, t_frames *border)
 		get_border(game, border);
 		first = false;
 	}
-	while (++y < game->window_y + game->player_y)
+	while (++y < game->y.window + game->y.player)
 	{
-		x = game->player_x + game->window_x - 1;
-		while (++x > game->window_x + game->player_x && x < upper_multiple_of_48(game->window_x + game->player_x))
+		x = game->x.player + game->x.window - 1;
+		while (++x > game->x.window + game->x.player && x < upper_multiple_of_48(game->x.window + game->x.player))
 		{
 			dst = *border->addr + (y * *border->line_size + x * (*border->bits_per_pixel / 8));
 			*(unsigned int*)dst = 0xFF000000;
 		}
 	}
-	y = game->player_y + game->window_y - 1;
-	while (++y > game->window_y + game->player_y && x < upper_multiple_of_48(game->window_y + game->player_y))
+	y = game->y.player + game->y.window - 1;
+	while (++y > game->y.window + game->y.player && x < upper_multiple_of_48(game->y.window + game->y.player))
 	{
 		x = -1;
-		while (++x < game->window_y + game->player_y)
+		while (++x < game->y.window + game->y.player)
 		{
 			dst = *border->addr + (y * *border->line_size + x * (*border->bits_per_pixel / 8));
 			*(unsigned int*)dst = 0xFF000000;

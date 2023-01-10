@@ -77,7 +77,7 @@ void	parsing_error(char **map, int x, int y)
 	exit(EXIT_SUCCESS);
 }
 
-t_map is_map_valid(char *map_path)
+void	is_map_valid(t_data *game, char *map_path)
 {
 	t_map map;
 	bool is_P = false;
@@ -110,9 +110,9 @@ t_map is_map_valid(char *map_path)
 	}
 	if (!(is_E || is_P))
 		parsing_error(map.map, -1, -1);
-	map.size_x = x;
-	map.size_y = y;
+	game->x.map_size = x;
+	game->y.map_size = y;
 	map.collectibles_nbr = c_nbr + 1;
-	check_path(&map);
-	return (map);
+	check_path(game, &map);
+	game->map = map;
 }
