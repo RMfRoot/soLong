@@ -16,9 +16,10 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include <math.h>
 # include <mlx.h>
-# include "libft.h"
+# include "libft/libft.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 20
 # endif

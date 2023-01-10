@@ -13,7 +13,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-SRC = free.c utils.c get_next_line.c get_map.c check_path.c get_images.c movement.c main.c
+SRC = free.c utils.c gnl/get_next_line_utils.c gnl/get_next_line.c get_map.c check_path.c get_images.c movement.c main.c
 OBJ = $(SRC:.c=.o)
 NAME = soLong
 
@@ -23,6 +23,7 @@ NAME = soLong
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB) Makefile
+	$(MAKE) /libft
 	$(CC) $(CFLAGS) $(OBJ) libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
