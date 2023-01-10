@@ -43,7 +43,7 @@ void get_movement(t_data *game)
 
 	y = (game->y.player + game->y.move) / 48;
 	x = (game->x.player + game->x.move) / 48;
-	if (++character_speed < 5)
+	if (++character_speed < 1)
 		return ;
 	character_speed = 0;
 	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 1) / 48][x] != '1')

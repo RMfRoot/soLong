@@ -20,9 +20,6 @@
 # include <math.h>
 # include <mlx.h>
 # include "libft/libft.h"
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20
-# endif
 
 typedef struct s_frames{
 	void **images;
@@ -90,7 +87,7 @@ typedef struct s_data {
 }   t_data;
 
 char *my_strjoin(char *s1, char *s2, bool free_s1, bool free_s2);
-char *file_path(char *action, char *direction, int iteration);
+char *file_path(char *sprite_name, int iteration);
 void get_images(t_data *game);
 int	check_file_type(const char *haystack, const char *needle);
 void is_map_valid(t_data *game, char *map_path);

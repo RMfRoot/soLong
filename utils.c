@@ -62,12 +62,10 @@ int	upper_multiple_of_48(int nbr)
 	nbr = nbr / 48;
 	return (++nbr * 48);
 }
-char *file_path(char *action, char *direction, int iteration)
+char *file_path(char *sprite_name, int iteration)
 {
     char *path;
-    path = my_strjoin("/mnt/c/Users/cuck/Downloads/", action, false, false);
-    path = my_strjoin(path, "_", true, false);
-    path = my_strjoin(path, direction, true, false);
+    path = my_strjoin("sprites/", sprite_name, false, false);
     path = my_strjoin(path, ft_itoa(iteration), true, true);
     path = my_strjoin(path, ".xpm", true, false);
     return (path);

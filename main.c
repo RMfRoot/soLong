@@ -111,7 +111,7 @@ int render_next_frame(t_data *game)
     print_grass(game);
     print_map(game);
     //screen_border(game, &game->map.border);
-    if (frame_speed++ < 100)
+    if (frame_speed++ < 5)
     {
         player_to_window(game, game->player_imgs.last_frame, false);
         return (0);

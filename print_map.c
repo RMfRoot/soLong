@@ -100,7 +100,7 @@ void map_to_window(t_data *game, t_frames *frame, double x, double y)
             return ;
         mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48 + (game->x.window/2 - game->x.player) - game->x.move, y * 48 + (game->y.window/2 - game->y.player) - game->y.move);
     }
-    if (++frame->animation_speed > 190)
+    if (++frame->animation_speed > 5)
     {
         frame->frame_iteration++;
         frame->animation_speed = 0;

@@ -18,13 +18,13 @@ OBJ = $(SRC:.c=.o)
 NAME = soLong
 
 %.o : %.c
-	$(CC) $(CFLAGS) -g -I/usr/include -Imlx_linux -O0 -c $< -o $@
+	$(CC) $(CFLAGS) -g -Imlx -c -O0 -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB) Makefile
-	$(MAKE) /libft
-	$(CC) $(CFLAGS) $(OBJ) libft.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	cd libft ; make
+	$(CC) $(CFLAGS) $(OBJ) libft/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
