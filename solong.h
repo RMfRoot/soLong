@@ -54,8 +54,6 @@ typedef struct s_map{
 	char **map;
 	bool **tried;
 	int collectibles_nbr;
-	int size_x;
-	int size_y;
 	t_frames grass;
 	t_frames barrier;
 	t_frames vertical_barrier;
@@ -73,33 +71,37 @@ typedef struct s_input{
     bool D_pressed;
 }	t_input;
 
+typedef struct s_axis{
+	int map_size;
+	int window;
+	int player;
+	int move;
+}	t_axis;
+
 typedef struct s_data {
 	t_input inputs;
     t_player player_imgs;
 	t_map map;
+	t_axis	x;
+	t_axis	y;
     void *mlx;
     void *mlx_win;
-	int window_x;
-	int window_y;
-	int player_x;
-	int player_y;
-	int move_x;
-	int move_y;
 }   t_data;
 
 char *my_strjoin(char *s1, char *s2, bool free_s1, bool free_s2);
 char *file_path(char *action, char *direction, int iteration);
 void get_images(t_data *game);
 int	check_file_type(const char *haystack, const char *needle);
-t_map is_map_valid(char *map_path);
+void is_map_valid(t_data *game, char *map_path);
 char	*get_next_line(int fd);
 void	parsing_error(char **map, int x, int y);
-void	check_path(t_map *map);
+void	check_path(t_data *game, t_map *map);
 void screen_border(t_data *game, t_frames *border);
 void malloc_img(t_frames *frames, int i);
 void free_img(t_frames *frames);
 int	upper_multiple_of_48(int nbr);
 void get_movement(t_data *game);
 void start_position(t_data *game);
+void map_to_window(t_data *game, t_frames *frame, double x, double y);
 
 #endif

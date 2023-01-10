@@ -41,62 +41,27 @@ void player_to_window(t_data *game, t_frames frame, bool newframe)
     static int i = 0;
     if (i >= frame.max_frame)
         i = 0;
-    if (game->window_x/2 > abs(game->map.size_x * 48 - (game->player_x + game->move_x)))
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->player_x + game->move_x - (game->map.size_x * 48 - game->window_x), game->window_y/2 - frame.height[i]);
-    else if (game->player_x + game->move_x < game->window_x/2)
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->player_x + game->move_x, game->window_y/2 - frame.height[i]);
-    else if (game->window_y/2 > abs(game->map.size_y * 48 - (game->player_y + game->move_y)))
-        mlx_put_image_to_window(game->mlx, game->mlx_win,frame.images[i], game->window_x/2, game->player_y + game->move_y - (game->map.size_y * 48 - game->window_y) - frame.height[i]);
+    if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.player + game->y.player < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.player - (frame.height[i] - 50));
+    else if (game->x.player + game->x.move < game->x.window/2 && game->y.player + game->y.player < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.player - (frame.height[i] - 50));
+    else if (game->x.player + game->x.move < game->x.window/2 && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.window/2 - (frame.height[i] - 50));
+    else if (game->x.player + game->x.move < game->x.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move, game->y.window/2 - (frame.height[i] - 50));
+    else if (game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    else if (game->y.player + game->y.player < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.player - (frame.height[i] - 50));
     else
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->window_x/2, game->window_y/2 - frame.height[i]);
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.window/2 - (frame.height[i] - 50));
     game->player_imgs.last_frame = frame;
     if (newframe)
         i++;
-}
-void map_to_window(t_data *game, t_frames *frame, double x, double y)
-{
-    if (frame->frame_iteration >= frame->max_frame)
-        frame->frame_iteration = 0;
-    if (game->window_x/2 > abs(game->map.size_x * 48 - (game->player_x + game->move_x)))
-    {
-        if (x * 48 < game->map.size_x * 48 - game->window_x - 48 || y * 48 < game->player_y + game->move_y - game->window_y/2 
-            || y * 48 > game->window_y/2 + 48 + game->player_y + game->move_y)
-            return ;
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48 - (game->map.size_x * 48 - game->window_x), y * 48 + (game->window_y/2 - game->player_y) - game->move_y - 48);
-    }
-    else if (game->player_x + game->move_x - game->window_x/2 < 0)
-    {
-        if (x * 48 > game->window_x || y * 48 < game->player_y + game->move_y - game->window_y/2 
-            || y * 48 > game->window_y/2 + 48 + game->player_y + game->move_y)
-            return ;
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48, y * 48 + (game->window_y/2 - game->player_y) - game->move_y - 48);
-    }
-    else if (game->window_y/2 > abs(game->map.size_y * 48 - (game->player_y + game->move_y + 48)))
-    {
-        if (y * 48 < game->map.size_y * 48 - game->window_y - 48 || x * 48 < game->player_x + game->move_x - game->window_x/2 
-            || x * 48 > game->window_x/2 + 48 + game->player_x + game->move_x)
-            return ;
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48 + (game->window_x/2 - game->player_x) - game->move_x, y * 48 - (game->map.size_y * 48 - game->window_y));
-    }/*
-    else if (game->player_y + game->move_y - game->window_y/2 + 48 < 0)
-    {
-        if (y * 48 > game->window_y + 48 || x * 48 < game->player_x + game->move_x - game->window_x/2 
-            || x * 48 > game->window_x/2 + 48 + game->player_x + game->move_x)
-            return ;
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48 + (game->window_x/2 - game->player_x) + game->move_x, y * 48);
-    }*/
-    else
-    {
-        if (x * 48 < game->player_x - 48 + game->move_x - game->window_x/2 || y * 48 < game->player_y + game->move_y - game->window_y/2 
-            || x * 48 > game->window_x/2 + game->player_x + game->move_x || y * 48 > game->window_y/2 + 48 + game->player_y + game->move_y)
-            return ;
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48 + (game->window_x/2 - game->player_x) - game->move_x, y * 48 + (game->window_y/2 - game->player_y) - game->move_y - 48);
-    }
-    if (++frame->animation_speed > 190)
-    {
-        frame->frame_iteration++;
-        frame->animation_speed = 0;
-    }
 }
 void    print_grass(t_data *game)
 {
@@ -182,16 +147,16 @@ void struct_default(t_data *game)
     game->inputs.A_pressed = false;
     game->inputs.S_pressed = false;
     game->inputs.D_pressed = false;
-    game->window_x = 600;
-    game->window_y = 600;
-    if (game->map.size_y * 48 < 600)
-        game->window_y = game->map.size_y * 48;
-    if (game->map.size_x * 48 < 600)
-        game->window_x = game->map.size_x * 48;
+    game->x.window = 600;
+    game->y.window = 600;
+    if (game->y.map_size * 48 < 600)
+        game->y.window = game->y.map_size * 48;
+    if (game->x.map_size * 48 < 600)
+        game->x.window = game->x.map_size * 48;
     game->player_imgs.last_direction = game->player_imgs.stand_S;
     game->player_imgs.last_frame = game->player_imgs.stand_S;
-    game->move_x = 0;
-    game->move_y = 0;
+    game->x.move = 0;
+    game->y.move = 0;
     start_position(game);
 }
 int main(int argc, char **argv)
@@ -203,13 +168,13 @@ int main(int argc, char **argv)
         printf("Invalid number of arguments");
         return (1);
     }
-    game.map = is_map_valid(argv[1]);
+    is_map_valid(&game, argv[1]);
     game.mlx = mlx_init();
     if (!game.mlx)
         return (1);
     get_images(&game);
     struct_default(&game);
-    game.mlx_win = mlx_new_window(game.mlx, game.window_x, game.window_y, "Hello world!");
+    game.mlx_win = mlx_new_window(game.mlx, game.x.window, game.y.window, "Hello world!");
     render_next_frame(&game);
     mlx_loop_hook(game.mlx, render_next_frame, &game);
 	mlx_loop(game.mlx);

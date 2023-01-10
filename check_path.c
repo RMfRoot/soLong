@@ -94,7 +94,7 @@ void	find_path_call(t_map *map, t_case start, t_case *dest)
 		i++;
 	}
 }
-void	check_path(t_map *map)
+void	check_path(t_data *game, t_map *map)
 {
 	int y;
 	int x;
@@ -104,12 +104,12 @@ void	check_path(t_map *map)
 
 	y = -1;
 	dest_count = 0;
-	map->tried = malloc(sizeof(bool **) * map->size_y);
+	map->tried = malloc(sizeof(bool **) * game->y.map_size);
 	dest = malloc(sizeof(t_case *) * map->collectibles_nbr);
 	while (map->map[++y])
 	{
 		x = -1;
-		map->tried[y] = malloc(sizeof(bool *) * map->size_x);
+		map->tried[y] = malloc(sizeof(bool *) * game->x.map_size);
 		while (map->map[y][++x])
 		{
 			map->tried[y][x] = false;
