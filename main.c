@@ -14,25 +14,25 @@
 
 int keyrelease(int keycode, t_data *game)
 {
-    if (keycode == 0x0057 || keycode == 0x0077)
+    if (keycode == 13)
         game->inputs.W_pressed = false;
-    if (keycode == 0x0041 || keycode == 0x0061)
+    if (keycode == 0)
         game->inputs.A_pressed = false;
-    if (keycode == 0x0053 || keycode == 0x0073)
+    if (keycode == 1)
         game->inputs.S_pressed = false;
-    if (keycode == 0x0044 || keycode == 0x0064)
+    if (keycode == 2)
         game->inputs.D_pressed = false;
     return (1);
 }
 int keypress(int keycode, t_data *game)
 {
-    if (keycode == 0x0057 || keycode == 0x0077)
+    if (keycode == 13)
         game->inputs.W_pressed = true;
-    if (keycode == 0x0041 || keycode == 0x0061)
+    if (keycode == 0)
         game->inputs.A_pressed = true;
-    if (keycode == 0x0053 || keycode == 0x0073)
+    if (keycode == 1)
         game->inputs.S_pressed = true;
-    if (keycode == 0x0044 || keycode == 0x0064)
+    if (keycode == 2)
         game->inputs.D_pressed = true;
     return (1);
 }
@@ -41,22 +41,22 @@ void player_to_window(t_data *game, t_frames frame, bool newframe)
     static int i = 0;
     if (i >= frame.max_frame)
         i = 0;
-    if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
-    else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.player + game->y.player < game->y.window/2)
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.player - (frame.height[i] - 50));
-    else if (game->x.player + game->x.move < game->x.window/2 && game->y.player + game->y.player < game->y.window/2)
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.player - (frame.height[i] - 50));
-    else if (game->x.player + game->x.move < game->x.window/2 && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.move)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.move - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)) && game->y.player + game->y.move < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.player + game->y.move - (frame.height[i] - 50));
+    else if (game->x.player + game->x.move < game->x.window/2 && game->y.player + game->y.move < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.move - (frame.height[i] - 50));
+    else if (game->x.player + game->x.move < game->x.window/2 && game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.move)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i],  game->x.player + game->x.move, game->y.player + game->y.move - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
     else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)))
         mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move - (game->x.map_size * 48 - game->x.window), game->y.window/2 - (frame.height[i] - 50));
     else if (game->x.player + game->x.move < game->x.window/2)
         mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.player + game->x.move, game->y.window/2 - (frame.height[i] - 50));
-    else if (game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.player)))
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.player - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
-    else if (game->y.player + game->y.player < game->y.window/2)
-        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.player - (frame.height[i] - 50));
+    else if (game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.move)))
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.move - (game->y.map_size * 48 - game->y.window) - (frame.height[i] - 50));
+    else if (game->y.player + game->y.move < game->y.window/2)
+        mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.player + game->y.move - (frame.height[i] - 50));
     else
         mlx_put_image_to_window(game->mlx, game->mlx_win, frame.images[i], game->x.window/2, game->y.window/2 - (frame.height[i] - 50));
     game->player_imgs.last_frame = frame;

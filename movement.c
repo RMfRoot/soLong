@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 14:50:38 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/01 14:50:41 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:09:48 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,30 @@ void start_position(t_data *game)
 
 void get_movement(t_data *game)
 {
-	static int character_speed = 0;
 	int y;
 	int x;
 
 	y = (game->y.player + game->y.move) / 48;
 	x = (game->x.player + game->x.move) / 48;
-	if (++character_speed < 1)
-		return ;
-	character_speed = 0;
+	printf("%d %d\n", y, x);
 	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 1) / 48][x] != '1')
-		game->y.move--;
+	{
+		if (!((game->x.player + game->x.move) % 48 > 2 && game->map.map[(game->y.player + game->y.move - 1) / 48][x+1] == '1'))
+			game->y.move--;
+	}
 	if (game->inputs.A_pressed && game->map.map[y][(game->x.player + game->x.move - 1) / 48] != '1')
-		game->x.move--;
+	{
+		if (!((game->y.player + game->y.move) % 48 > 2 && game->map.map[y+1][(game->x.player + game->x.move - 1) / 48] == '1'))
+			game->x.move--;
+	}
 	if (game->inputs.S_pressed && game->map.map[y+1][x] != '1')
-		game->y.move++;
+	{
+		if (!((game->x.player + game->x.move) % 48 > 2 && game->map.map[y+1][x+1] == '1'))
+			game->y.move++;
+	}
 	if (game->inputs.D_pressed && game->map.map[y][x+1] != '1')
-		game->x.move++;
+		if (!((game->y.player + game->y.move) % 48 > 2 && game->map.map[y+1][x+1] == '1'))
+			game->x.move++;
 }
 //fix x++ on map.ber, if 1 pixel higher, will walk on barrier.
 void get_border(t_data *game, t_frames *border)

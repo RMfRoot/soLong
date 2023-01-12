@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:48:11 by egeorgel          #+#    #+#             */
-/*   Updated: 2022/12/27 14:48:14 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:01:55 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,19 @@ bool find_path(t_map *map, t_case start, t_case dest)
 void	find_path_call(t_map *map, t_case start, t_case *dest)
 {
 	int i;
+	int y;
+	int x;
 
 	i = 0;
 	while (i < map->collectibles_nbr)
 	{
+		y = -1;
+		while (map->map[++y])
+		{
+			x = -1;
+			while (map->map[y][++x])
+				map->tried[y][x] = false;
+		}
 		if (!find_path(map, start, dest[i]))
 			parsing_error(map->map, 0, -1);
 		i++;
@@ -112,7 +121,6 @@ void	check_path(t_data *game, t_map *map)
 		map->tried[y] = malloc(sizeof(bool *) * game->x.map_size);
 		while (map->map[y][++x])
 		{
-			map->tried[y][x] = false;
 			if (map->map[y][x] == 'P')
 			{
 				start.y = y;

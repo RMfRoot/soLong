@@ -15,39 +15,49 @@
 typedef struct s_fill{
     t_frames *frame;
 	bool top;
-	bool axis1_is_x;
-	int x;
-	int y;
+	double x;
+	double y;
 }	t_fill;
 
 
-void	print_map_sides(t_data *game, t_axis axis1, t_axis axis2, t_fill fill)
+void	print_map_sides_x(t_data *game, t_axis x, t_axis y, t_fill fill)
 {
 	if (fill.top)
 	{
-        if (fill.x * 48 < axis1.map_size * 48 - axis1.window - 48 || fill.y * 48 < axis2.player + axis2.move - axis2.window/2 - 48
-        	    || fill.y * 48 > axis2.window/2 + axis2.player + axis2.move)
+        if (fill.x * 48 < x.map_size * 48 - x.window - 48 || fill.y * 48 < y.player + y.move - y.window/2 - 48
+        	    || fill.y * 48 > y.window/2 + y.player + y.move)
         	return ;
-		else if (fill.axis1_is_x)
-        	mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 - (axis1.map_size * 48 - axis1.window), fill.y * 48 + (axis2.window/2 - axis2.player) - axis2.move);
-		else
-        	mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 + (axis2.window/2 - axis2.player) - axis2.move, fill.y * 48 - (axis1.map_size * 48 - axis1.window));
+        mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 - (x.map_size * 48 - x.window), fill.y * 48 + (y.window/2 - y.player) - y.move);
 	}
 	else
 	{
-        if (fill.x * 48 > axis1.window || fill.y * 48 < axis2.player + axis2.move - axis2.window/2 - 48
-                || fill.y * 48 > axis2.window/2 + axis2.player + axis2.move)
+        if (fill.x * 48 > x.window || fill.y * 48 < y.player + y.move - y.window/2 - 48
+                || fill.y * 48 > y.window/2 + y.player + y.move)
             return ;
-		else if (fill.axis1_is_x)
-        	mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48, fill.y * 48 + (axis2.window/2 - axis2.player) - axis2.move);
-		else
-        	mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 + (axis2.window/2 - axis2.player) - axis2.move, fill.y * 48);
+    	mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48, fill.y * 48 + (y.window/2 - y.player) - y.move);
+    }
+}
+void	print_map_sides_y(t_data *game, t_axis x, t_axis y, t_fill fill)
+{
+	if (fill.top)
+	{
+        if (fill.y * 48 < y.map_size * 48 - y.window - 48 || fill.x * 48 < x.player + x.move - x.window/2 - 48
+                || fill.x * 48 > x.window/2 + x.player + x.move)
+            return ;
+        mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 + (x.window/2 - x.player) - x.move, fill.y * 48 - (y.map_size * 48 - y.window));
+    }
+	else
+	{
+        if (fill.y * 48 > y.window || fill.x * 48 < x.player + x.move - x.window/2 - 48
+                || fill.x * 48 > x.window/2 + x.player + x.move)
+            return ;
+        mlx_put_image_to_window(game->mlx, game->mlx_win, fill.frame->images[fill.frame->frame_iteration], fill.x * 48 + (x.window/2 - x.player) - x.move, fill.y * 48);
 	}
 }
 
 void map_to_window(t_data *game, t_frames *frame, double x, double y)
 {
-    t_fill fill = {.frame = frame, .axis1_is_x = true, .top = true, .x = x, .y = y};
+    t_fill fill = {.frame = frame, .top = true, .x = x, .y = y};
 
     if (frame->frame_iteration >= frame->max_frame)
         frame->frame_iteration = 0;
@@ -76,22 +86,18 @@ void map_to_window(t_data *game, t_frames *frame, double x, double y)
         mlx_put_image_to_window(game->mlx, game->mlx_win, frame->images[frame->frame_iteration], x * 48, y * 48 - (game->y.map_size * 48 - game->y.window));
     }
     else if (game->x.window/2 > abs(game->x.map_size * 48 - (game->x.player + game->x.move)))
-        print_map_sides(game, game->x, game->y, fill);
+        print_map_sides_x(game, game->x, game->y, fill);
     else if (game->x.player + game->x.move - game->x.window/2 < 0)
     {
         fill.top = false;
-        print_map_sides(game, game->x, game->y, fill);
+        print_map_sides_x(game, game->x, game->y, fill);
     }
     else if (game->y.window/2 > abs(game->y.map_size * 48 - (game->y.player + game->y.move)))
-    {
-        fill.axis1_is_x = false;
-        print_map_sides(game, game->y, game->x, fill);
-    }
+        print_map_sides_y(game, game->x, game->y, fill);
     else if (game->y.player + game->y.move - game->y.window/2 < 0)
     {
         fill.top = false;
-        fill.axis1_is_x = false;
-        print_map_sides(game, game->y, game->x, fill);
+        print_map_sides_y(game, game->x, game->y, fill);
     }
     else
     {
