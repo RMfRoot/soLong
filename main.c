@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 11:29:54 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/13 19:09:21 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:00:23 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ int keypress(int keycode, t_data *game)
     if (keycode == 2)
         game->inputs.D_pressed = true;
     return (1);
+}
+bool no_c_left(t_data *game)
+{
+    int y;
+    int x;
+    
+    y = -1;
+    while (game->map.map[++y])
+    {
+        x = -1;
+        while (game->map.map[y][++x])
+            if (game->map.map[y][x] == 'C')
+                return (false);
+    }
+    return (true);
+}
+void collectible_interaction(t_data *game)
+{
+    if (game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] == 'C')
+    {
+        game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] = '0';
+        if (no_c_left(game))
+            game->teleporter_on = true;
+    }
 }
 void player_to_window(t_data *game, t_frames frame, bool newframe)
 {
@@ -96,7 +120,12 @@ void    print_map(t_data *game)
                     map_to_window(game, &game->map.vertical_barrier, x + 0.25, (double)y + (double)((double)game->map.barrier_stick.width/48));
             }
             else if (game->map.map[y][x] == 'E')
-                map_to_window(game, &game->map.teleport_on, x, y);
+            {
+                if (game->teleporter_on)
+                    map_to_window(game, &game->map.teleport_on, x, y);
+                else
+                    map_to_window(game, &game->map.teleport_off, x, y);
+            }
             else if (game->map.map[y][x] == 'C')
                 map_to_window(game, &game->map.collectible, (double)x + 0.2, y);
         }
@@ -110,7 +139,7 @@ int render_next_frame(t_data *game)
     get_movement(game);
     print_grass(game);
     print_map(game);
-    //screen_border(game, &game->map.border);
+    collectible_interaction(game);
     if (frame_speed++ < 3)
     {
         player_to_window(game, game->player_imgs.last_frame, false);
@@ -157,6 +186,7 @@ void struct_default(t_data *game)
     game->player_imgs.last_frame = game->player_imgs.stand_S;
     game->x.move = 0;
     game->y.move = 0;
+    game->teleporter_on = false;
     start_position(game);
 }
 int main(int argc, char **argv)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   soLong.h                                           :+:      :+:    :+:   */
+/*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:15:20 by egeorgel          #+#    #+#             */
-/*   Updated: 2022/12/18 15:55:16 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:47:39 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_data {
 	t_axis	y;
     void *mlx;
     void *mlx_win;
+	bool teleporter_on;
 }   t_data;
 
 char *my_strjoin(char *s1, char *s2, bool free_s1, bool free_s2);
