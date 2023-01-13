@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 14:50:38 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/12 20:09:48 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:00:17 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,25 @@ void get_movement(t_data *game)
 
 	y = (game->y.player + game->y.move) / 48;
 	x = (game->x.player + game->x.move) / 48;
-	printf("%d %d\n", y, x);
-	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 1) / 48][x] != '1')
+	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 2) / 48][x] != '1')
 	{
 		if (!((game->x.player + game->x.move) % 48 > 2 && game->map.map[(game->y.player + game->y.move - 1) / 48][x+1] == '1'))
-			game->y.move--;
+			game->y.move -= 2;
 	}
-	if (game->inputs.A_pressed && game->map.map[y][(game->x.player + game->x.move - 1) / 48] != '1')
+	if (game->inputs.A_pressed && game->map.map[y][(game->x.player + game->x.move - 2) / 48] != '1')
 	{
 		if (!((game->y.player + game->y.move) % 48 > 2 && game->map.map[y+1][(game->x.player + game->x.move - 1) / 48] == '1'))
-			game->x.move--;
+			game->x.move -= 2;
 	}
 	if (game->inputs.S_pressed && game->map.map[y+1][x] != '1')
 	{
 		if (!((game->x.player + game->x.move) % 48 > 2 && game->map.map[y+1][x+1] == '1'))
-			game->y.move++;
+			game->y.move += 2;
 	}
 	if (game->inputs.D_pressed && game->map.map[y][x+1] != '1')
 		if (!((game->y.player + game->y.move) % 48 > 2 && game->map.map[y+1][x+1] == '1'))
-			game->x.move++;
+			game->x.move += 2;
 }
-//fix x++ on map.ber, if 1 pixel higher, will walk on barrier.
 void get_border(t_data *game, t_frames *border)
 {	
 	malloc_img(border, 2);

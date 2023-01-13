@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 11:29:54 by egeorgel          #+#    #+#             */
-/*   Updated: 2022/12/15 10:45:42 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:09:21 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void    print_map(t_data *game)
             else if (game->map.map[y][x] == 'E')
                 map_to_window(game, &game->map.teleport_on, x, y);
             else if (game->map.map[y][x] == 'C')
-                map_to_window(game, &game->map.collectible, x, y);
+                map_to_window(game, &game->map.collectible, (double)x + 0.2, y);
         }
     }
 }
@@ -111,7 +111,7 @@ int render_next_frame(t_data *game)
     print_grass(game);
     print_map(game);
     //screen_border(game, &game->map.border);
-    if (frame_speed++ < 5)
+    if (frame_speed++ < 3)
     {
         player_to_window(game, game->player_imgs.last_frame, false);
         return (0);
