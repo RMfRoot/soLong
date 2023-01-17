@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 20:35:44 by egeorgel          #+#    #+#              #
-#    Updated: 2023/01/02 14:17:40 by egeorgel         ###   ########.fr        #
+#    Updated: 2023/01/17 21:21:30 by egeorgel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 SRC = free.c utils.c gnl/get_next_line_utils.c gnl/get_next_line.c get_map.c check_path.c get_images.c movement.c print_map.c main.c
 OBJ = $(SRC:.c=.o)
 NAME = soLong

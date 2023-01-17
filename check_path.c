@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:48:11 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/12 18:01:55 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:47:31 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,5 @@ void	check_path(t_data *game, t_map *map)
 		}
 	}
 	find_path_call(map, start, dest);
+	free(dest);
 }

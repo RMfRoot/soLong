@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:03 by egeorgel          #+#    #+#             */
-/*   Updated: 2022/12/18 15:56:07 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:07:26 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,10 @@ static char	**get_map(char *map_path)
 void	parsing_error(char **map, int x, int y)
 {
 	int i;
-	int j;
 
-	i = 0;
-	j = 0;
-	printf("  ");
-	while (map[i][j])
-	{
-		printf("%d", j);
-		j++;
-	}
-	printf("\n");
-	while (map[i])
-	{
-		printf("%d %s\n", i, map[i]);
-		free(map[i]);
-		i++;
-	}
-	free(map);
+	i = -1;
+	while (map[++i])
+		printf("%d\t%s\n", i, map[i]);
 	if (x == -1 && y == 0)
 		printf("\n missing P\\E\\C");
 	else if (x == 0 && y == -1)

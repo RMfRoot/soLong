@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 14:50:38 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/13 19:12:26 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:30:35 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ void get_movement(t_data *game)
 {
 	int y;
 	int x;
-
+	int moved_x;
+	int moved_y;
+	
 	y = (game->y.player + game->y.move) / 48;
 	x = (game->x.player + game->x.move) / 48;
+	moved_x = game->x.move;
+	moved_y = game->y.move;
 	if (game->inputs.W_pressed && game->map.map[(game->y.player + game->y.move - 2) / 48][x] != '1')
 	{
 		if (!((game->x.player + game->x.move) % 48 > 2 && game->map.map[(game->y.player + game->y.move - 1) / 48][x+1] == '1'))
@@ -58,6 +62,10 @@ void get_movement(t_data *game)
 			game->y.move += 2;
 	}
 	if (game->inputs.D_pressed && game->map.map[y][x+1] != '1')
+	{
 		if (!((game->y.player + game->y.move) % 48 > 2 && game->map.map[y+1][x+1] == '1'))
 			game->x.move += 2;
+	}
+	if (game->x.move != moved_x || game->y.move != moved_y)
+		game->step_count++;
 }

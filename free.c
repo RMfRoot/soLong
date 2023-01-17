@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeorgel <egeorgel@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:43:06 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/02 14:43:10 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:59:41 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "solong.h"
 
-void free_img(t_frames *frames)
+int end_game(t_data *game)
 {
-	free(frames->addr);
-	free(frames->bits_per_pixel);
-	free(frames->endian);
-	free(frames->height);
-	free(frames->images);
-	free(frames->line_size);
+	game->map.map[0][0] = '1';
+	system("leaks soLong");
+    exit(EXIT_SUCCESS);
 }

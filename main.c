@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 11:29:54 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/13 20:00:23 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:16:29 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int keyrelease(int keycode, t_data *game)
 }
 int keypress(int keycode, t_data *game)
 {
+    if (keycode == 53)
+        end_game(game);
     if (keycode == 13)
         game->inputs.W_pressed = true;
     if (keycode == 0)
@@ -34,7 +36,7 @@ int keypress(int keycode, t_data *game)
         game->inputs.S_pressed = true;
     if (keycode == 2)
         game->inputs.D_pressed = true;
-    return (1);
+    return (0);
 }
 bool no_c_left(t_data *game)
 {
@@ -50,15 +52,6 @@ bool no_c_left(t_data *game)
                 return (false);
     }
     return (true);
-}
-void collectible_interaction(t_data *game)
-{
-    if (game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] == 'C')
-    {
-        game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] = '0';
-        if (no_c_left(game))
-            game->teleporter_on = true;
-    }
 }
 void player_to_window(t_data *game, t_frames frame, bool newframe)
 {
@@ -131,19 +124,47 @@ void    print_map(t_data *game)
         }
     }
 }
-int render_next_frame(t_data *game)
+void collectible_interaction(t_data *game)
+{
+    if (game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] == 'C')
+    {
+        game->map.map[(game->y.player + game->y.move) / 48][(game->x.player + game->x.move + 18) / 48] = '0';
+        if (no_c_left(game))
+            game->teleporter_on = true;
+        print_grass(game);
+        print_map(game);
+        player_to_window(game, game->player_imgs.get_collectible, true);
+        game->sleep = true;
+    }
+}
+void exit_interaction(t_data *game)
+{
+    if (game->map.map[(game->y.player + game->y.move + 25) / 48][(game->x.player + game->x.move) / 48] == 'E' && game->teleporter_on)
+    {
+        print_grass(game);
+        print_map(game);
+        mlx_string_put(game->mlx, game->mlx_win, game->x.window/2 - 50, game->y.window/2 - 10, 0x00FFFFFF, "You Won !");
+        mlx_string_put(game->mlx, game->mlx_win, game->x.window/2 - 90, game->y.window/2 + 10, 0x00FFFFFF, "Press Esc to quit");
+        game->game_end = true;
+        
+    }
+}
+void write_step_count(t_data *game)
+{
+    static unsigned long last_count = 0;
+    if (game->step_count/48 > last_count)
+    {
+        last_count = game->step_count/48;
+        ft_printf("%d\n", last_count);
+    }
+}
+void player_animation(t_data *game)
 {
     static int frame_speed = 0;
-    mlx_hook(game->mlx_win, 2, 1L<<0, keypress, game);
-    mlx_key_hook(game->mlx_win, keyrelease, game);
-    get_movement(game);
-    print_grass(game);
-    print_map(game);
-    collectible_interaction(game);
     if (frame_speed++ < 3)
     {
         player_to_window(game, game->player_imgs.last_frame, false);
-        return (0);
+        return ;
     }
     else if (game->inputs.W_pressed)
     {
@@ -168,7 +189,28 @@ int render_next_frame(t_data *game)
     else
         player_to_window(game, game->player_imgs.last_direction, true);
     frame_speed = 0;
-    return (1);
+}
+int render_next_frame(t_data *game)
+{
+    if (game->game_end)
+    {
+        exit_interaction(game);
+        return (0);
+    }
+    if (game->sleep)
+        sleep(1);
+    game->sleep = false;
+    mlx_hook(game->mlx_win, 17, 0L, end_game, game);
+    mlx_hook(game->mlx_win, 2, 1L<<0, keypress, game);
+    mlx_key_hook(game->mlx_win, keyrelease, game);
+    get_movement(game);
+    print_grass(game);
+    print_map(game);
+    write_step_count(game);
+    player_animation(game);
+    collectible_interaction(game);
+    exit_interaction(game);
+    return (0);
 }
 void struct_default(t_data *game)
 {
@@ -186,7 +228,10 @@ void struct_default(t_data *game)
     game->player_imgs.last_frame = game->player_imgs.stand_S;
     game->x.move = 0;
     game->y.move = 0;
+    game->step_count = 0;
     game->teleporter_on = false;
+    game->sleep = false;
+    game->game_end = false;
     start_position(game);
 }
 int main(int argc, char **argv)
@@ -204,8 +249,8 @@ int main(int argc, char **argv)
         return (1);
     get_images(&game);
     struct_default(&game);
-    game.mlx_win = mlx_new_window(game.mlx, game.x.window, game.y.window, "Hello world!");
+    game.mlx_win = mlx_new_window(game.mlx, game.x.window, game.y.window, "The legend of Zelda : a link to the past");
     render_next_frame(&game);
     mlx_loop_hook(game.mlx, render_next_frame, &game);
-	mlx_loop(game.mlx);
+    mlx_loop(game.mlx);
 }

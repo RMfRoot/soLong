@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:15:20 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/13 19:47:39 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:57:47 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@
 
 typedef struct s_frames{
 	void **images;
-	void **addr;
-	int *bits_per_pixel;
-	int *line_size;
-	int *endian;
 	int width;
 	int *height;
 	int	frame_iteration;
@@ -43,6 +39,7 @@ typedef struct s_player{
 	t_frames stand_E;
 	t_frames stand_W;
 	t_frames stand_N;
+	t_frames get_collectible;
 	t_frames shadow;
 	t_frames last_direction;
 	t_frames last_frame;
@@ -67,6 +64,7 @@ typedef struct s_input{
     bool A_pressed;
     bool S_pressed;
     bool D_pressed;
+	bool spacebar;
 }	t_input;
 
 typedef struct s_axis{
@@ -84,7 +82,10 @@ typedef struct s_data {
 	t_axis	y;
     void *mlx;
     void *mlx_win;
+	unsigned long step_count;
 	bool teleporter_on;
+	bool game_end;
+	bool sleep;
 }   t_data;
 
 char *my_strjoin(char *s1, char *s2, bool free_s1, bool free_s2);
@@ -97,10 +98,10 @@ void	parsing_error(char **map, int x, int y);
 void	check_path(t_data *game, t_map *map);
 void screen_border(t_data *game, t_frames *border);
 void malloc_img(t_frames *frames, int i);
-void free_img(t_frames *frames);
 int	upper_multiple_of_48(int nbr);
 void get_movement(t_data *game);
 void start_position(t_data *game);
 void map_to_window(t_data *game, t_frames *frame, double x, double y);
+int end_game(t_data *game);
 
 #endif
