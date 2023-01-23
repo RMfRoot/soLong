@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   print_map_b.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 16:27:47 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/22 15:42:35 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/22 16:29:30 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/22 16:56:34 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solong.h"
+#include "solong_b.h"
 
 void	print_down_right_corner(t_data *g, t_frames *f, double x, double y)
 {

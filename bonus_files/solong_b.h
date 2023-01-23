@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solong.h                                           :+:      :+:    :+:   */
+/*   solong_b.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:15:20 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/21 21:46:54 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:57:31 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOLONG_H
-# define SOLONG_H
+#ifndef SOLONG_B_H
+# define SOLONG_B_H
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
 # include <mlx.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_case{
 	int	x;

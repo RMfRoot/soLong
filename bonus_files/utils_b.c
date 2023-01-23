@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_b.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 19:46:35 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/22 16:30:08 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/22 16:29:57 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/23 17:05:33 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solong.h"
+#include "solong_b.h"
 
 void	my_strjoin_free(char *s1, char *s2, bool free_s1, bool free_s2)
 {
@@ -75,10 +75,10 @@ int	check_file_type(const char *haystack, const char *needle)
 void	write_step_count(t_data *game)
 {
 	static unsigned long	last_count = 0;
+	char					*str;
 
-	if (game->step_count / 48 > last_count)
-	{
+	if (game->step_count / 48 > last_count && game->step_count / 48 < INT8_MAX)
 		last_count = game->step_count / 48;
-		ft_printf("%d\n", last_count);
-	}
+	str = ft_itoa(last_count);
+	mlx_string_put(game->mlx, game->mlx_win, game->x.w - ((ft_strlen(str) + 1) * 10), 10, 0x00FFFFFF, str);
 }

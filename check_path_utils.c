@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   check_path_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:18:55 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/21 19:58:06 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/21 20:52:59 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/21 21:46:10 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "solong.h"
 
-# include <stdlib.h>
+void	fill_start(t_case *start, t_map *map, int x, int y)
+{
+	if (map->map[y][x] == 'P')
+	{
+		start->y = y;
+		start->x = x;
+	}
+}
 
-void	ft_putstr_printf(char *s, int fd, int *count);
-void	ft_putchar_printf(char c, int fd, int *count);
+void	fill_dest(t_case *dest, t_map *map, int x, int y)
+{
+	static int	i = 0;
 
-#endif
+	if ((map->map[y][x] == 'C' || map->map[y][x] == 'E'))
+	{
+		dest[i].y = y;
+		dest[i].x = x;
+		i++;
+	}
+}

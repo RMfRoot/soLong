@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 11:29:54 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/22 15:23:51 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/22 16:28:31 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/23 19:26:21 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solong.h"
+#include "solong_b.h"
 
 bool	no_c_left(t_data *game)
 {
@@ -39,6 +39,7 @@ void	collectible_interaction(t_data *game)
 			game->teleporter_on = true;
 		print_grass(game);
 		parcour_map(game);
+		write_step_count(game);
 		player_to_window(game, game->player_imgs.get_collectible, true);
 		game->sleep = true;
 	}

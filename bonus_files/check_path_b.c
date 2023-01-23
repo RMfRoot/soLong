@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_path.c                                       :+:      :+:    :+:   */
+/*   check_path_b.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/27 14:48:11 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/21 20:57:36 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/22 16:27:40 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/22 16:56:07 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solong.h"
+#include "solong_b.h"
 
 t_case	get_direction(t_case start, t_case dest, int pos)
 {

@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   check_path_utils_b.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 14:43:06 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/17 21:59:41 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/01/22 16:27:48 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/01/22 16:56:10 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "solong_b.h"
 
-#include "solong.h"
-
-int end_game(t_data *game)
+void	fill_start(t_case *start, t_map *map, int x, int y)
 {
-	game->map.map[0][0] = '1';
-	system("leaks soLong");
-    exit(EXIT_SUCCESS);
+	if (map->map[y][x] == 'P')
+	{
+		start->y = y;
+		start->x = x;
+	}
+}
+
+void	fill_dest(t_case *dest, t_map *map, int x, int y)
+{
+	static int	i = 0;
+
+	if ((map->map[y][x] == 'C' || map->map[y][x] == 'E'))
+	{
+		dest[i].y = y;
+		dest[i].x = x;
+		i++;
+	}
 }
