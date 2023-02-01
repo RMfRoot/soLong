@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:03 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/22 16:06:56 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:27:55 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	**get_map_lines(int fd)
 		free(map);
 		return (res);
 	}
-	printf("Empty map");
+	ft_printf("Empty map");
 	exit(EXIT_SUCCESS);
 }
 
@@ -42,9 +42,9 @@ static char	**get_map(char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	if (!check_file_type(map_path, ".ber"))
-		printf("Invalid file type");
+		ft_printf("Invalid file type");
 	else if (fd == -1)
-		printf("Invalid map path");
+		ft_printf("Invalid map path");
 	else
 		return (get_map_lines(fd));
 	exit(EXIT_SUCCESS);
@@ -55,14 +55,19 @@ void	parsing_error(char **map, int x, int y)
 	int	i;
 
 	i = -1;
+	if (x == -1 && y == -1)
+	{
+		ft_printf("could not access image files\n");
+		exit(EXIT_SUCCESS);
+	}
 	while (map[++i])
-		printf("%d\t%s\n", i, map[i]);
+		ft_printf("%d\t%s\n", i, map[i]);
 	if (x == -1 && y == 0)
-		printf("\n missing P\\E\\C");
+		ft_printf("\n missing P\\E\\C");
 	else if (x == 0 && y == -1)
-		printf("path to exit or collectible is invalid");
+		ft_printf("path to exit or collectible is invalid");
 	else
-		printf("\nparsing error at x=%d y=%d", x, y);
+		ft_printf("\nparsing error at x=%d y=%d", x, y);
 	exit(EXIT_SUCCESS);
 }
 

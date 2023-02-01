@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:28:31 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/23 19:26:21 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:14:48 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("Invalid number of arguments");
+		ft_printf("Invalid number of arguments");
 		return (1);
 	}
 	is_map_valid(&game, argv[1]);

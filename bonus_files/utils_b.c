@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:29:57 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/23 17:05:33 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:56:33 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	write_step_count(t_data *game)
 	if (game->step_count / 48 > last_count && game->step_count / 48 < INT8_MAX)
 		last_count = game->step_count / 48;
 	str = ft_itoa(last_count);
-	mlx_string_put(game->mlx, game->mlx_win, game->x.w - ((ft_strlen(str) + 1) * 10), 10, 0x00FFFFFF, str);
+	mlx_string_put(game->mlx, game->mlx_win, game->x.w
+		- ((ft_strlen(str) + 1) * 10), 10, 0x00FFFFFF, str);
 }

@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:15:20 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/21 21:46:54 by egeorgel         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:50:18 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_player{
 	t_frames	stand_w;
 	t_frames	stand_n;
 	t_frames	get_collectible;
-	t_frames	shadow;
 	t_frames	last_direction;
 	t_frames	last_frame;
 }	t_player;

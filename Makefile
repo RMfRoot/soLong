@@ -6,7 +6,7 @@
 #    By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 20:35:44 by egeorgel          #+#    #+#              #
-#    Updated: 2023/01/22 17:01:13 by egeorgel         ###   ########.fr        #
+#    Updated: 2023/02/01 01:57:27 by egeorgel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ endif
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -g -Imlx -c -O0 -c $< -o $@
+	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 $(NAME): $(OBJS) $(LIB) Makefile
 	cd libft ; make
@@ -69,9 +69,11 @@ bonus:
 
 clean:
 	rm -f $(OBJ) $(BOBJ)
+	cd libft ; make clean
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f libft/libft.a
 
 re: fclean all
 
