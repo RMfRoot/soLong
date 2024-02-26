@@ -6,7 +6,7 @@
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:03 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/01/31 23:27:55 by egeorgel         ###   ########.fr       */
+/*   Updated: 2024/02/26 21:37:21 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	check_map(t_map *map, int *y, bool p, bool e)
 		while (map->map[*y][++x])
 		{
 			if (map->map[*y][x] != '1' && (x - 1 < 0 || !map->map[*y][x + 1]
-				|| y - 1 < 0 || !map->map[*y + 1][x]))
+				|| *y - 1 < 0 || !map->map[*y + 1][x]))
 				parsing_error(map->map, x, *y);
 			if (!ft_strchr("01CEP", map->map[*y][x]))
 				parsing_error(map->map, x, *y);
@@ -110,6 +110,7 @@ void	is_map_valid(t_data *game, char *map_path)
 	p = false;
 	e = false;
 	y = -1;
+	map.collectibles_nbr = 0;
 	map.map = get_map(map_path);
 	game->x.m_len = check_map(&map, &y, p, e);
 	game->y.m_len = y;

@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 15:11:32 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/02/18 18:52:51 by egeorgel         ###   ########.fr       */
+/*   Created: 2023/02/09 21:43:49 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/07/21 23:57:05 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+bool	ft_strcmp(const char *str, const char *cmp)
 {
-	t_list	*lst;
+	int	i;
 
-	lst = malloc(sizeof(*lst));
-	if (!lst)
-		return (0);
-	lst->content = content;
-	lst->next = NULL;
-	return (lst);
+	i = 0;
+	if (!str || !cmp)
+		return (false);
+	if (ft_strlen(str) != ft_strlen(cmp))
+		return (false);
+	while (str[i] && str[i] == cmp[i])
+	{
+		i++;
+	}
+	if (str[i] || cmp[i])
+		return (false);
+	return (true);
 }
-6

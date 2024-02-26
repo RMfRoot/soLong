@@ -6,7 +6,7 @@
 #    By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 20:35:44 by egeorgel          #+#    #+#              #
-#    Updated: 2023/02/01 01:57:27 by egeorgel         ###   ########.fr        #
+#    Updated: 2024/02/26 21:31:21 by egeorgel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,11 +58,11 @@ endif
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -g -c $< -o $@
 
 $(NAME): $(OBJS) $(LIB) Makefile
 	cd libft ; make
-	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -L. -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 bonus:
 	@${MAKE} WITH_BONUS=1

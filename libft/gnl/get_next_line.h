@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeorgel <egeorgel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 15:11:32 by egeorgel          #+#    #+#             */
-/*   Updated: 2023/02/18 18:52:51 by egeorgel         ###   ########.fr       */
+/*   Created: 2022/11/26 18:04:41 by egeorgel          #+#    #+#             */
+/*   Updated: 2023/02/10 02:08:55 by egeorgel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include "../libft.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
-t_list	*ft_lstnew(void *content)
-{
-	t_list	*lst;
+char	*str_rem(char *str);
+char	*get_next_line(int fd);
+int		is_end(char *s);
+char	*get_read_fill(char *str, char *s, int read_res);
+char	*strjoin(char *str, char *s);
 
-	lst = malloc(sizeof(*lst));
-	if (!lst)
-		return (0);
-	lst->content = content;
-	lst->next = NULL;
-	return (lst);
-}
-6
+#endif
